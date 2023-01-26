@@ -2,31 +2,23 @@
 
   <PropertyGroup>
     <NeutralLanguage>en</NeutralLanguage>
-    <RepositoryUrl>https://github.com/rosenbjerg/FFMpegCore</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/rosenbjerg/FFMpegCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/drasive/FFMpegCore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/drasive/FFMpegCore</PackageProjectUrl>
     <Copyright></Copyright>
-    <Description>A .NET Standard FFMpeg/FFProbe wrapper for easily integrating media analysis and conversion into your .NET applications</Description>
+    <Description>A .NET Standard FFMpeg/FFProbe wrapper for easily integrating media analysis and conversion into your .NET applications. Uses Aspose.Drawing instead of System.Drawing.Common.</Description>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageReleaseNotes>- Fixes for `MetaDataArgument` (thanks @JKamsker)
-- Support for Audible `aaxc` (thanks @JKamsker)
-- Include errordata in `IMediaAnalysis` (thanks @JKamsker)
-- Pass `FFOptions` properly when using ffprobe (thanks @Notheisz57)
-- CancellationToken support for `AnalyseAsync`
-- Case-insensitive dictionaries for `Tags` and `Disposition`
-- Fix for `PosterWithAudio`
-- Fix for `JoinImageSequence`
-- Updates to dependendies
-- A lot of bug fixes</PackageReleaseNotes>
+    <PackageReleaseNotes></PackageReleaseNotes>
     <LangVersion>8</LangVersion>
     <PackageVersion>4.8.0</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Authors>Malte Rosenbjerg, Vlad Jerca, Max Bagryantsev</Authors>
+    <Authors>Malte Rosenbjerg, Vlad Jerca, Max Bagryantsev, Dimitri Vranken</Authors>
     <PackageTags>ffmpeg ffprobe convert video audio mediafile resize analyze muxing</PackageTags>
     <RepositoryType>GitHub</RepositoryType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Nullable>enable</Nullable>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>$(AssemblyName).AsposeDrawing</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
