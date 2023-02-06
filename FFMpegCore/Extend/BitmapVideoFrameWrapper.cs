@@ -26,38 +26,14 @@ namespace FFMpegCore.Extend
 
         public void Serialize(Stream stream)
         {
-            throw new NotImplementedException("Not implemented yet for SkiaSharp");
-
-            //var data = Source.LockBits(new Rectangle(0, 0, Width, Height), ImageLockMode.ReadOnly, Source.PixelFormat);
-
-            //try
-            //{
-            //    var buffer = new byte[data.Stride * data.Height];
-            //    Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
-            //    stream.Write(buffer, 0, buffer.Length);
-            //}
-            //finally
-            //{
-            //    Source.UnlockBits(data);
-            //}
+            var data = Source.Bytes;
+            stream.Write(data, 0, data.Length);
         }
 
         public async Task SerializeAsync(Stream stream, CancellationToken token)
         {
-            throw new NotImplementedException("Not implemented yet for SkiaSharp");
-
-            //var data = Source.LockBits(new Rectangle(0, 0, Width, Height), ImageLockMode.ReadOnly, Source.PixelFormat);
-
-            //try
-            //{
-            //    var buffer = new byte[data.Stride * data.Height];
-            //    Marshal.Copy(data.Scan0, buffer, 0, buffer.Length);
-            //    await stream.WriteAsync(buffer, 0, buffer.Length, token).ConfigureAwait(false);
-            //}
-            //finally
-            //{
-            //    Source.UnlockBits(data);
-            //}
+            var data = Source.Bytes;
+            await stream.WriteAsync(data, 0, data.Length, token).ConfigureAwait(false);
         }
 
         public void Dispose()

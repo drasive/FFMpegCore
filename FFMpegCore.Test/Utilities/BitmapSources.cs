@@ -22,7 +22,7 @@ namespace FFMpegCore.Test
 
         public static BitmapVideoFrameWrapper CreateVideoFrame(int index, SKColorType fmt, int w, int h, float scaleNoise, float offset)
         {
-            var bitmap = new SKBitmap(w, h, fmt, SKAlphaType.Unknown);
+            var bitmap = new SKBitmap(w, h, fmt, SKAlphaType.Opaque);
 
             offset = offset * index;
 

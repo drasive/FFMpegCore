@@ -407,11 +407,7 @@ namespace FFMpegCore.Test
 
             Assert.AreEqual(input.PrimaryVideoStream!.Width, bitmap.Width);
             Assert.AreEqual(input.PrimaryVideoStream.Height, bitmap.Height);
-
-            // TOOD: _
-            // This assert fails when using Aspose.Drawing
-            // It seems like this behaviour is not defined and not relied
-            Assert.AreEqual(bitmap.ColorType, SKColorType.Argb4444);  //ImageFormat.Png); 
+            Assert.AreEqual(bitmap.ColorType, SKColorType.Bgra8888);
         }
 
         [TestMethod, Timeout(TestTimeoutMilliseconds)]
