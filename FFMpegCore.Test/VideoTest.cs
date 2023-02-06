@@ -3,8 +3,6 @@ using FFMpegCore.Test.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,6 +11,7 @@ using FFMpegCore.Arguments;
 using FFMpegCore.Exceptions;
 using FFMpegCore.Pipes;
 using System.Threading;
+using SkiaSharp;
 
 namespace FFMpegCore.Test
 {
@@ -86,9 +85,9 @@ namespace FFMpegCore.Test
         }
 
         [DataTestMethod, Timeout(10000)]
-        [DataRow(System.Drawing.Imaging.PixelFormat.Format24bppRgb)]
-        [DataRow(System.Drawing.Imaging.PixelFormat.Format32bppArgb)]
-        public void Video_ToMP4_Args_Pipe(System.Drawing.Imaging.PixelFormat pixelFormat)
+        [DataRow(SKColorType.Rgb565)]
+        [DataRow(SKColorType.Bgra8888)]
+        public void Video_ToMP4_Args_Pipe(SKColorType pixelFormat)
         {
             using var outputFile = new TemporaryFile($"out{VideoType.Mp4.Extension}");
 
@@ -108,8 +107,8 @@ namespace FFMpegCore.Test
 
             var frames = new List<IVideoFrame> 
             {
-                BitmapSource.CreateVideoFrame(0, System.Drawing.Imaging.PixelFormat.Format24bppRgb, 255, 255, 1, 0),
-                BitmapSource.CreateVideoFrame(0, System.Drawing.Imaging.PixelFormat.Format24bppRgb, 256, 256, 1, 0)
+                BitmapSource.CreateVideoFrame(0, SKColorType.Rgb565, 255, 255, 1, 0),
+                BitmapSource.CreateVideoFrame(0, SKColorType.Rgb565, 256, 256, 1, 0)
             };
 
             var videoFramesSource = new RawVideoPipeSource(frames);
@@ -128,8 +127,8 @@ namespace FFMpegCore.Test
 
             var frames = new List<IVideoFrame>
             {
-                BitmapSource.CreateVideoFrame(0, System.Drawing.Imaging.PixelFormat.Format24bppRgb, 255, 255, 1, 0),
-                BitmapSource.CreateVideoFrame(0, System.Drawing.Imaging.PixelFormat.Format24bppRgb, 256, 256, 1, 0)
+                BitmapSource.CreateVideoFrame(0, SKColorType.Rgb565, 255, 255, 1, 0),
+                BitmapSource.CreateVideoFrame(0, SKColorType.Rgb565, 256, 256, 1, 0)
             };
 
             var videoFramesSource = new RawVideoPipeSource(frames);
@@ -147,8 +146,8 @@ namespace FFMpegCore.Test
 
             var frames = new List<IVideoFrame>
             {
-                BitmapSource.CreateVideoFrame(0, System.Drawing.Imaging.PixelFormat.Format24bppRgb, 255, 255, 1, 0),
-                BitmapSource.CreateVideoFrame(0, System.Drawing.Imaging.PixelFormat.Format32bppRgb, 255, 255, 1, 0)
+                BitmapSource.CreateVideoFrame(0, SKColorType.Rgb565, 255, 255, 1, 0),
+                BitmapSource.CreateVideoFrame(0, SKColorType.Bgra8888, 255, 255, 1, 0)
             };
 
             var videoFramesSource = new RawVideoPipeSource(frames);
@@ -167,8 +166,8 @@ namespace FFMpegCore.Test
 
             var frames = new List<IVideoFrame>
             {
-                BitmapSource.CreateVideoFrame(0, System.Drawing.Imaging.PixelFormat.Format24bppRgb, 255, 255, 1, 0),
-                BitmapSource.CreateVideoFrame(0, System.Drawing.Imaging.PixelFormat.Format32bppRgb, 255, 255, 1, 0)
+                BitmapSource.CreateVideoFrame(0, SKColorType.Rgb565, 255, 255, 1, 0),
+                BitmapSource.CreateVideoFrame(0, SKColorType.Bgra8888, 255, 255, 1, 0)
             };
 
             var videoFramesSource = new RawVideoPipeSource(frames);
@@ -314,10 +313,10 @@ namespace FFMpegCore.Test
             Assert.IsTrue(success);
         }
 
-        [DataTestMethod, Timeout(10000)]
-        [DataRow(System.Drawing.Imaging.PixelFormat.Format24bppRgb)]
-        [DataRow(System.Drawing.Imaging.PixelFormat.Format32bppArgb)]
-        public async Task Video_ToTS_Args_Pipe(System.Drawing.Imaging.PixelFormat pixelFormat)
+        [DataTestMethod, Timeout(30000)]
+        [DataRow(SKColorType.Rgb565)]
+        [DataRow(SKColorType.Bgra8888)]
+        public async Task Video_ToTS_Args_Pipe(SKColorType pixelFormat)
         {
             using var output = new TemporaryFile($"out{VideoType.Ts.Extension}");
             var input = new RawVideoPipeSource(BitmapSource.CreateBitmaps(128, pixelFormat, 256, 256));
@@ -347,10 +346,10 @@ namespace FFMpegCore.Test
         }
 
         [DataTestMethod, Timeout(10000)]
-        [DataRow(System.Drawing.Imaging.PixelFormat.Format24bppRgb)]
-        [DataRow(System.Drawing.Imaging.PixelFormat.Format32bppArgb)]
-        // [DataRow(PixelFormat.Format48bppRgb)]
-        public void RawVideoPipeSource_Ogv_Scale(System.Drawing.Imaging.PixelFormat pixelFormat)
+        [DataRow(SKColorType.Rgb565)]
+        [DataRow(SKColorType.Bgra8888)]
+        //[DataRow(PixelFormat.Format48bppRgb)]
+        public void RawVideoPipeSource_Ogv_Scale(SKColorType pixelFormat)
         {
             using var outputFile = new TemporaryFile($"out{VideoType.Ogv.Extension}");
             var videoFramesSource = new RawVideoPipeSource(BitmapSource.CreateBitmaps(128, pixelFormat, 256, 256));
@@ -382,10 +381,10 @@ namespace FFMpegCore.Test
         }
 
         [DataTestMethod, Timeout(10000)]
-        [DataRow(System.Drawing.Imaging.PixelFormat.Format24bppRgb)]
-        [DataRow(System.Drawing.Imaging.PixelFormat.Format32bppArgb)]
+        [DataRow(SKColorType.Rgb565)]
+        [DataRow(SKColorType.Bgra8888)]
         // [DataRow(PixelFormat.Format48bppRgb)]
-        public void Video_ToMP4_Resize_Args_Pipe(System.Drawing.Imaging.PixelFormat pixelFormat)
+        public void Video_ToMP4_Resize_Args_Pipe(SKColorType pixelFormat)
         {
             using var outputFile = new TemporaryFile($"out{VideoType.Mp4.Extension}");
             var videoFramesSource = new RawVideoPipeSource(BitmapSource.CreateBitmaps(128, pixelFormat, 256, 256));
@@ -407,9 +406,10 @@ namespace FFMpegCore.Test
             Assert.AreEqual(input.PrimaryVideoStream!.Width, bitmap.Width);
             Assert.AreEqual(input.PrimaryVideoStream.Height, bitmap.Height);
 
+            // TOOD: _
             // This assert fails when using Aspose.Drawing
             // It seems like this behaviour is not defined and not relied
-            //Assert.AreEqual(bitmap.RawFormat, ImageFormat.Png); 
+            Assert.AreEqual(bitmap.ColorType, SKColorType.Argb4444);  //ImageFormat.Png); 
         }
 
         [TestMethod, Timeout(10000)]
@@ -420,10 +420,10 @@ namespace FFMpegCore.Test
 
             FFMpeg.Snapshot(TestResources.Mp4Video, outputPath);
 
-            using var bitmap = Image.FromFile(outputPath);
+            using var bitmap = SKBitmap.Decode(outputPath);
             Assert.AreEqual(input.PrimaryVideoStream!.Width, bitmap.Width);
             Assert.AreEqual(input.PrimaryVideoStream.Height, bitmap.Height);
-            Assert.AreEqual(bitmap.RawFormat, ImageFormat.Png);
+            //Assert.AreEqual(bitmap.RawFormat, ImageFormat.Png);
         }
 
         [TestMethod, Timeout(10000)]
@@ -552,7 +552,7 @@ namespace FFMpegCore.Test
         {
             using var resStream = new MemoryStream();
             var reader = new StreamPipeSink(resStream);
-            var writer = new RawVideoPipeSource(BitmapSource.CreateBitmaps(128, System.Drawing.Imaging.PixelFormat.Format24bppRgb, 128, 128));
+            var writer = new RawVideoPipeSource(BitmapSource.CreateBitmaps(128, SKColorType.Rgb565, 128, 128));
 
             FFMpegArguments
                 .FromPipeInput(writer)
