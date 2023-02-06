@@ -5,7 +5,7 @@
     <RepositoryUrl>https://github.com/drasive/FFMpegCore</RepositoryUrl>
     <PackageProjectUrl>https://github.com/drasive/FFMpegCore</PackageProjectUrl>
     <Copyright></Copyright>
-    <Description>A .NET Standard FFMpeg/FFProbe wrapper for easily integrating media analysis and conversion into your .NET applications. Uses Aspose.Drawing instead of System.Drawing.Common.</Description>
+    <Description>A .NET Standard FFMpeg/FFProbe wrapper for easily integrating media analysis and conversion into your .NET applications. Uses SkiaSharp instead of System.Drawing.</Description>
     <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes></PackageReleaseNotes>
