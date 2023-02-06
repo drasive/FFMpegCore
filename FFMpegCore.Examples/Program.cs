@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using FFMpegCore;
 using FFMpegCore.Enums;
 using FFMpegCore.Pipes;
 using FFMpegCore.Extend;
+using SkiaSharp;
 
 var inputPath = "/path/to/input";
 var outputPath = "/path/to/output";
@@ -85,7 +85,7 @@ var inputImagePath = "/path/to/input/image";
 {
     FFMpeg.PosterWithAudio(inputPath, inputAudioPath, outputPath);
     // or
-    var image = Image.FromFile(inputImagePath);
+    var image = SKBitmap.Decode(inputImagePath);
     image.AddAudio(inputAudioPath, outputPath);
 }
 

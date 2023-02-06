@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using FFMpegCore.Enums;
 using FFMpegCore.Helpers;
+using SkiaSharp;
 
 namespace FFMpegCore
 {
@@ -25,7 +25,7 @@ namespace FFMpegCore
 
             Size = fileInfo.Length / (1024 * 1024);
 
-            using (var image = Image.FromFile(fileInfo.FullName))
+            using (var image = SKBitmap.Decode(fileInfo.FullName))
             {
                 Width = image.Width;
                 Height = image.Height;

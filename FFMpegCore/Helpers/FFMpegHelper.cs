@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using FFMpegCore.Exceptions;
 using Instances;
+using SkiaSharp;
 
 namespace FFMpegCore.Helpers
 {
@@ -10,8 +10,8 @@ namespace FFMpegCore.Helpers
     {
         private static bool _ffmpegVerified;
 
-        public static void ConversionSizeExceptionCheck(Image image)
-            => ConversionSizeExceptionCheck(image.Size.Width, image.Size.Height);
+        public static void ConversionSizeExceptionCheck(SKBitmap image)
+            => ConversionSizeExceptionCheck(image.Width, image.Height);
 
         public static void ConversionSizeExceptionCheck(IMediaAnalysis info)
             => ConversionSizeExceptionCheck(info.PrimaryVideoStream!.Width, info.PrimaryVideoStream.Height);

@@ -4,11 +4,11 @@ using FFMpegCore.Helpers;
 using FFMpegCore.Pipes;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Instances;
+using SkiaSharp;
 
 namespace FFMpegCore
 {
@@ -68,7 +68,7 @@ namespace FFMpegCore
         /// <param name="streamIndex">Selected video stream index.</param>
         /// <param name="inputFileIndex">Input file index</param>
         /// <returns>Bitmap with the requested snapshot.</returns>
-        public static Bitmap Snapshot(string input, Size? size = null, TimeSpan? captureTime = null, int? streamIndex = null, int inputFileIndex = 0)
+        public static SKBitmap Snapshot(string input, Size? size = null, TimeSpan? captureTime = null, int? streamIndex = null, int inputFileIndex = 0)
         {
             var source = FFProbe.Analyse(input);
             var (arguments, outputOptions) = BuildSnapshotArguments(input, source, size, captureTime, streamIndex, inputFileIndex);
@@ -80,9 +80,10 @@ namespace FFMpegCore
                 .ProcessSynchronously();
 
             ms.Position = 0;
-            using var bitmap = new Bitmap(ms);
-            return bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), bitmap.PixelFormat);
+            using var bitmap = SKBitmap.Decode(ms);
+            return bitmap.Copy();
         }
+
         /// <summary>
         ///     Saves a 'png' thumbnail to an in-memory bitmap
         /// </summary>
@@ -92,7 +93,7 @@ namespace FFMpegCore
         /// <param name="streamIndex">Selected video stream index.</param>
         /// <param name="inputFileIndex">Input file index</param>
         /// <returns>Bitmap with the requested snapshot.</returns>
-        public static async Task<Bitmap> SnapshotAsync(string input, Size? size = null, TimeSpan? captureTime = null, int? streamIndex = null, int inputFileIndex = 0)
+        public static async Task<SKBitmap> SnapshotAsync(string input, Size? size = null, TimeSpan? captureTime = null, int? streamIndex = null, int inputFileIndex = 0)
         {
             var source = await FFProbe.AnalyseAsync(input).ConfigureAwait(false);
             var (arguments, outputOptions) = BuildSnapshotArguments(input, source, size, captureTime, streamIndex, inputFileIndex);
@@ -104,7 +105,7 @@ namespace FFMpegCore
                 .ProcessAsynchronously();
 
             ms.Position = 0;
-            return new Bitmap(ms);
+            return SKBitmap.Decode(ms);
         }
 
         private static (FFMpegArguments, Action<FFMpegArgumentOptions> outputOptions) BuildSnapshotArguments(
@@ -247,7 +248,7 @@ namespace FFMpegCore
         public static bool PosterWithAudio(string image, string audio, string output)
         {
             FFMpegHelper.ExtensionExceptionCheck(output, FileExtension.Mp4);
-            using (var imageFile = Image.FromFile(image))
+            using (var imageFile = SKBitmap.Decode(image))
             {
                 FFMpegHelper.ConversionSizeExceptionCheck(imageFile);
             }
@@ -311,7 +312,7 @@ namespace FFMpegCore
             var tempFolderName = Path.Combine(GlobalFFOptions.Current.TemporaryFilesFolder, Guid.NewGuid().ToString());
             var temporaryImageFiles = images.Select((imageInfo, index) =>
             {
-                using var image = Image.FromFile(imageInfo.FullName);
+                using var image = SKBitmap.Decode(imageInfo.FullName);
                 FFMpegHelper.ConversionSizeExceptionCheck(image);
                 var destinationPath = Path.Combine(tempFolderName, $"{index.ToString().PadLeft(9, '0')}{imageInfo.Extension}");
                 Directory.CreateDirectory(tempFolderName);
